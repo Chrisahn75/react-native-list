@@ -14,20 +14,17 @@ export default function List() {
       .catch((err) => console.log(err));
   }, []);
 
-  const Country = ({ item }) => {
-    return (
-      <View style={styles.container}>
-          <Text style={styles.text}> {item.name.common}</Text>
-          <Text style={styles.text}> {item.capital}</Text>
-          <Image style={styles.img} source={{ uri: item.flags.png }}/>
-      </View>
-    );
-  };
   return (
       <FlatList
         data={countries}
-        renderItem={Country}
-        keyExtractor={(data, index) => index.toString()}
+        renderItem={(data) => (
+        <View style={styles.container}>
+          <Text style={styles.text}> {data.item.name.common}</Text>
+          <Text style={styles.text}> {data.item.capital ? data.item.capital[0]: "No capital"}</Text>
+          <Image style={styles.img} source={{ uri: data.item.flags.png }}/>
+        </View>
+        )}
+        keyExtractor={(_, index) => index.toString()}
       />
   );
 }
